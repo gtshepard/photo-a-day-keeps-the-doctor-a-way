@@ -71,11 +71,4 @@ def photo_of_the_day():
 
 get_image()
 prepare_and_send_mail(FILE_NAME)
-#while True:
-    #photo_of_the_day()
-#url = f'https://live.staticflickr.com/{photo['server']}/{photo['id']}_{photo['secret']}.jpg'
-#requests.download('')
-#photo_repsonse = requests.get(url)
-#print(photo_repsonse.)
 
-#i = Image.open(io.BytesIO(photo_repsonse.content))
