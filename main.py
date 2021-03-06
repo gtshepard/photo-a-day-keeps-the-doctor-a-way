@@ -28,11 +28,15 @@ url = f'https://live.staticflickr.com/{server}/{photo_id}_{photo_secret}.jpg'
 
 image_file = urllib.request.urlretrieve(url, "dog-of-the-day.jpg")
 SENDER_EMAIL = 'shepard.garrison.t@gmail.com'
-RECIP_EMAIL = 'garrisontshepard@gmail.com'
+RECIP_EMAIL = 'marinshepard210@gmail.com'
 PASSWORD = 'Gt$092894'
+SUBJECT = 'Dog Of The Day (BY GOOSE)'
 def send_mail(file_name):
     img_data = open(file_name, 'rb').read()
-    #msg = MIMEMultipart()
+    msg = MIMEMultipart()
+    msg['Subject'] = SUBJECT
+    msg['From'] = SENDER_EMAIL
+    msg['To'] = RECIP_EMAIL
     #msg['Subject'] = 'Dog of The Day'
     #msg['From'] = SENDER_EMAIL
     #msg['To'] = RECIP_EMAIL
@@ -40,17 +44,24 @@ def send_mail(file_name):
     #msg.attach(text)
     #image = MIMEImage(img_data, name=os.path.basename(file_name))
     #msg.attach(image)
-    msg = 'Why,Oh why!'
+    #msg = 'Why,Oh why!'
+    text = 'this email was sent from a goose program'
+    msg.attach(MIMEText(text, "plain"))
+    #text = MIMEText("test")
+    image = MIMEImage(img_data, name=os.path.basename(file_name))
+    image.add_header('Content-Disposition','attachment',filename=file_name)
+    msg.attach(image)
+
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.ehlo()
         server.starttls()
         server.login(SENDER_EMAIL, PASSWORD)
-        server.sendmail(SENDER_EMAIL, RECIP_EMAIL, msg)
+        server.sendmail(SENDER_EMAIL, [RECIP_EMAIL], msg.as_string())
         server.close()
-    except:
+    except Exception as e:
     
-        print('fial')
+        print(e)
 
 send_mail("dog-of-the-day.jpg")
 
